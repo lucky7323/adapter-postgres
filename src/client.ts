@@ -1814,6 +1814,7 @@ class PostgresDatabaseAdapter
     }
 }
 
+export { PostgresDatabaseAdapter };
 export const postgresAdapter: Adapter = {
     init: (runtime: IAgentRuntime) => {
         const POSTGRES_URL = runtime.getSetting("POSTGRES_URL");
