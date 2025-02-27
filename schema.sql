@@ -13,7 +13,15 @@
 
 
 CREATE EXTENSION IF NOT EXISTS vector;
-CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
+DO $$ 
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'fuzzystrmatch') THEN
+        CREATE EXTENSION fuzzystrmatch;
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'fuzzystrmatch extension already exists or could not be created.';
+END $$;
 
 -- Create a function to determine vector dimension
 CREATE OR REPLACE FUNCTION get_embedding_dimension()
